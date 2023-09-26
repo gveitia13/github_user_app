@@ -23,6 +23,7 @@ export class FormUser extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         this.setState({loader: true})
+        this.setState({showCard: false})
         const {username, loader, data, showCard} = this.state;
 
         try {
@@ -43,7 +44,7 @@ export class FormUser extends Component {
         const {username, loader, data, showCard} = this.state;
         return (
             <div>
-                <div className="card">
+                <div className="card mt-3">
                     <div className="card-header text-center">
                         <h2 className='card-title'>Ingrese un usuario de GitHub</h2>
                     </div>

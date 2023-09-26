@@ -27,7 +27,7 @@ export class FormUser extends Component {
         const {username, loader, data, showCard} = this.state;
 
         try {
-            await this.gitHubService.fetchData(username)
+            await this.gitHubService.getDataByUser(username)
                 .then(data => {
                     console.log(data)
                     this.setState({data: data})

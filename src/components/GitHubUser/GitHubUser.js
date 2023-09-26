@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
+import './GitHubUser.css'
+import GitHubService from "../../services/GitHubService";
+import {CardRepository} from "../CardRepository/CardRepository";
 
 export class GitHubUser extends Component {
+    constructor(props) {
+        super(props);
+        this.gitHubService = new GitHubService()
+        this.state = {
+            repos: []
+        }
+    }
 
     /**
      * username
@@ -11,6 +21,18 @@ export class GitHubUser extends Component {
      * lista de repositorios mas recientes (nombre y dessc)
      */
 
+    componentDidMount() {
+        this.gitHubService.getReposByUser(this.props.data.login).then(response => {
+            console.log(response.data)
+            let sorted_data = response.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+            this.setState({
+                repos: sorted_data.slice(0, 6)
+            })
+
+            console.log(this.state.repos)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -19,15 +41,20 @@ export class GitHubUser extends Component {
                         <h2 className="card-title">Datos del usuario "{this.props.data.login}"</h2>
                     </div>
                     <div className="card-body">
-                        <div className="row">
+                        <div className="row g-4">
                             <div className="col-12 col-md-3">
                                 <img src={this.props.data.avatar_url} alt="Avatar" className='img-fluid rounded-pill'/>
                                 <h3 className='mt-2 mb-0'>{this.props.data.name}</h3>
-                                <p className='text-muted fs-5 fw-light'>{this.props.data.login}</p>
+                                <p className='text-muted mb-2 fs-5 fw-light'>{this.props.data.login}</p>
                                 <a href={this.props.data.html_url} target='_blank' rel='noreferrer'
                                    className='btn btn-light mb-2 btn-sm w-100 border-dark-subtle'>Follow</a>
-                                <p>{this.props.data.bio}</p>
-                                <p className='text-muted'>
+                                <p className='mb-2'>{this.props.data.bio}</p>
+                                <p className='small'>
+                                    <a href={this.props.data.html_url + '?tab=repositories'} target='_blank'
+                                       rel='noreferrer' className='text-decoration-none text-black link-primary'>
+                                        <i className='bx bx-code-block'></i>&nbsp;
+                                        {this.props.data.public_repos} public repositories</a></p>
+                                <p className='text-muted mb-1'>
                                     <small>
                                         <a href={this.props.data.html_url + '?tab=followers'} target='_blank'
                                            rel='noreferrer' className='text-decoration-none link-primary text-muted'>
@@ -39,14 +66,28 @@ export class GitHubUser extends Component {
                                         </a>
                                     </small>
                                 </p>
-                                <p><a href={this.props.data.html_url + '?tab=repositories'} target='_blank'
-                                      rel='noreferrer' className='text-decoration-none text-black link-primary'>
-                                    <i className='bx bx-code-block'></i>
-                                    {this.props.data.public_repos} public repositories</a></p>
-                                <p className='mb-0'><a href=''></a></p>
+                                {this.props.data.company &&
+                                    <p><a href={'https://github.com/' + this.props.data.company.slice(1)}
+                                          target='_blank'
+                                          rel='noreferrer'
+                                          className='text-black small user-company text-decoration-none'>
+                                        <i className='bx-building bx'></i> {this.props.data.company}
+                                    </a></p>}
+                                {this.props.data.location &&
+                                    <p><i className='bx-map bx small'></i> {this.props.data.location}</p>}
+                                {this.props.data.twitter_username &&
+                                    <p><a href={'https://twitter.com/' + this.props.data.twitter_username.slice(1)}
+                                          className='text-black small user-social text-decoration-none'><i
+                                        className='bx bxl-twitter'></i>{this.props.data.twitter_username}</a>
+                                    </p>}
                             </div>
                             <div className="col-12 col-md-9">
-
+                                <p className='fs-5 fw-normal'>Últimos repositorios</p>
+                                <div className='row g-3'>
+                                    {this.state.repos.map((value, index) =>
+                                        (<CardRepository repo={value}></CardRepository>)
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,12 @@
+.user-company:hover {
+    text-decoration: underline !important;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.user-social:hover {
+    text-decoration: underline !important;
+    color: var(--bs-primary) !important;
+}

@@ -10,3 +10,7 @@ p {
     text-decoration: underline !important;
     color: var(--bs-primary) !important;
 }
+
+.user-social i {
+    color: var(--bs-gray);
+}

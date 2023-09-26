@@ -4,10 +4,9 @@ import {FormUser} from "./components/FormUser/FormUser";
 function App() {
     return (
         <div className="App">
-            <div className="container">
+            <div className="container-xl">
                 <div>
                     <FormUser></FormUser>
-                    {/*<GitHubUser></GitHubUser>*/}
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import GitHubService from "../services/GitHubService";
+import GitHubService from "../../services/GitHubService";
+import Loader from "../Loader/Loader";
 
 export class GitHubUser extends Component {
     constructor() {
@@ -45,9 +46,7 @@ export class GitHubUser extends Component {
                         </p>
                     </div>
                 ) : (
-                    <p>
-                        Cargando .....
-                    </p>
+                    <Loader></Loader>
                 )}
             </div>
         );

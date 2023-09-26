@@ -1,13 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
-import {GitHubUser} from "./components/GitHubUser";
+import {GitHubUser} from "./components/GitHubUser/GitHubUser";
+import {FormUser} from "./components/FormUser/FormUser";
 
 function App() {
     return (
         <div className="App">
             <div className="container">
                 <div>
-                    <h1>GitHub User</h1>
+                    <FormUser></FormUser>
                     <GitHubUser></GitHubUser>
                 </div>
             </div>

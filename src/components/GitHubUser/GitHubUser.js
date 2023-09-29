@@ -13,7 +13,7 @@ export class GitHubUser extends Component {
       repos: [],
       loader: false,
       length: 6,
-      // search: ''
+      search: ''
     }
   }
 
@@ -40,10 +40,12 @@ export class GitHubUser extends Component {
   }
 
   handleInputChange = (event) => {
-    // let {value} = event.target;
+    let {name, value} = event.target;
+    this.setState((prevState)=>({...prevState, [name]: value}));
     // this.setState({[name]: value});
     // this.setState({repos: this.state.repos.filter(e => e.name.includes(value))})
-    // console.log(event.target.value)
+    console.log(value)
+    console.log(this.state.search)
   }
 
   render() {
@@ -119,10 +121,10 @@ export class GitHubUser extends Component {
               <div className="col-12 col-md-8 col-xl-9">
                 <p className='fs-5 mb-2 fw-normal'>Últimos repositorios</p>
 
-                <div className='py-2'>
-                  <input type="search" className='form-control border-dark' placeholder='Buscar repositorio'
-                         value='' onChange={this.handleInputChange} name='search'/>
-                </div>
+                {/*<div className='py-2'>*/}
+                {/*  <input type="search" className='form-control border-dark' placeholder='Buscar repositorio'*/}
+                {/*         value={search} onChange={this.handleInputChange} name='search'/>*/}
+                {/*</div>*/}
 
                 {this.state.loader && <Loader></Loader>}
                 <div className='row d-flex g-3'>

@@ -4,7 +4,8 @@ export class CardRepository extends Component {
 
   render() {
     return (
-      <div className='col-12 col-lg-6'>
+      <div className='col-12 col-lg-6'
+           style={!this.props.repo.name.includes(this.props.repo.search) ? {display:'block'} : {display:'none'}}>
         <div className="card h-100">
           <div className="card-body pb-0">
             <p className='mb-2'><a href={this.props.repo.html_url}

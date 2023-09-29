@@ -4,6 +4,7 @@ import GitHubService from "../../services/GitHubService";
 import {CardRepository} from "../CardRepository/CardRepository";
 import Loader from "../Loader/Loader";
 
+
 export class GitHubUser extends Component {
   constructor(props) {
     super(props);
@@ -11,18 +12,29 @@ export class GitHubUser extends Component {
     this.state = {
       repos: [],
       loader: false,
+      length: 6,
     }
+  }
+
+  toggleLength = () => {
+    console.log(this.state)
+    if (this.state.length <= 6)
+      this.setState({length: this.state.repos.length})
+    else
+      this.setState({length: 6})
   }
 
   componentDidMount() {
     this.setState({loader: true})
     this.gitHubService.getReposByUser(this.props.data.login)
       .then(response => {
+        console.log(response.data)
         let sorted_data = response.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
         this.setState({
-          repos: sorted_data.slice(0, 6)
+          repos: sorted_data
         })
         this.setState({loader: false})
+        this.setState({length: 6})
       })
   }
 
@@ -100,10 +112,14 @@ export class GitHubUser extends Component {
 
                 {this.state.loader && <Loader></Loader>}
                 <div className='row d-flex g-3'>
-                  {this.state.repos.map((value, index) =>
+                  {this.state.repos.slice(0, this.state.length).map((value, index) =>
                     (<CardRepository repo={value}></CardRepository>)
                   )}
                 </div>
+                {this.state.repos.length >= 6 && <div className="text-center">
+                  <button className='btn btn-light mt-2 border-dark-subtle'
+                          onClick={this.toggleLength}>{this.state.length <= 6 ? 'Ver todos' : 'Ver menos'}</button>
+                </div>}
               </div>
             </div>
           </div>

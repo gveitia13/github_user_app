@@ -13,6 +13,7 @@ export class GitHubUser extends Component {
       repos: [],
       loader: false,
       length: 6,
+      // search: ''
     }
   }
 
@@ -38,7 +39,15 @@ export class GitHubUser extends Component {
       })
   }
 
+  handleInputChange = (event) => {
+    // let {value} = event.target;
+    // this.setState({[name]: value});
+    // this.setState({repos: this.state.repos.filter(e => e.name.includes(value))})
+    // console.log(event.target.value)
+  }
+
   render() {
+    // const {search} = this.state
     return (
       <div>
         <div className="card">
@@ -109,6 +118,11 @@ export class GitHubUser extends Component {
               </div>
               <div className="col-12 col-md-8 col-xl-9">
                 <p className='fs-5 mb-2 fw-normal'>Últimos repositorios</p>
+
+                <div className='py-2'>
+                  <input type="search" className='form-control border-dark' placeholder='Buscar repositorio'
+                         value='' onChange={this.handleInputChange} name='search'/>
+                </div>
 
                 {this.state.loader && <Loader></Loader>}
                 <div className='row d-flex g-3'>
